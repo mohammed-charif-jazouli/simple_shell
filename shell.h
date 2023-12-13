@@ -14,35 +14,36 @@
 #define SPECIF " \t\r\a\n"
 extern char **environ;
 
-/* Built-in functions */
-void exit_shell(char **cmd, char **argv, int *status, int indx);
-void print_environment(char **cmd, int *status);
-int change_directory(const char *target_dir);
 
-/* Tool functions */
-char *read_line(void);
-int shell_loop(char **argv);
-char **tokenize(char *input);
-char *get_full_path(char *cmd);
-char *get_environment_variable(char *var);
-int execute_command(char **cmd, char **argv, int count, int indx);
-void print_error(char *argv_0, char *cmd, int indx);
-int is_builtin_command(char *cmd);
-void handle_builtin_commands(char **cmd, char **argv, int *status, int indx);
+/*builtin_functions*/
+void exit_shel(char **cmd, char **argv, int *status, int indx);
+void pr_env(char **cmd, int *status);
+int _cd(const char *target_dir);
+
+/* tools_function*/
+char *return_line(void);
+int shell_looper(char **argv);
+char **getoken(char *returned_line);
+char *_get_path(char *cmd);
+char *_getenv(char *var);
+int _executer(char **cmd, char **argv, int count, int indx);
+void pr_error(char *argv_0, char *cmd, int indx);
+int is_builtcmd(char *cmd);
+void _builtcmd(char **cmd, char **argv, int *status, int indx);
 void exit_error(char **cmd, char **argv, int indx);
 
-/* String handler functions */
+/*string_hundler_functions*/
 char *_strdup(const char *s);
 int _strlen(const char *s);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
-int _strcmp(const char *s1, const char *s2);
-char *int_to_ascii(int n);
-void reverse_string(char *str, int len);
-int is_positive_number(const char *s);
-int _atoi(const char *s);
+int _strcmp(char *s1, char *s2);
+char *int_asc(int n);
+void reverse_str(char *str, int len);
+int is_num_positive(char *s);
+int _atoi(char *s);
 
-/* Memory functions */
-void free_array(char **ary);
+/*memory_functions*/
+void freearray(char **ary);
 
 #endif /* _SHELL_H_ */
