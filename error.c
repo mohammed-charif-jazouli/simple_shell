@@ -1,90 +1,39 @@
 #include "shell.h"
+
 /**
- * intlen - a func that ... later
- * @n: a parameter
- * Return: the lenth.
+ * _puts - Prints a string to the standard output stream
+ * @str: The string to print
+ *
+ * Return: Void
  */
-int intlen(int n)
+void _puts(char *str)
 {
-	unsigned int num;
-	int len = 1;
+	size_t len;
+	ssize_t num_written;
 
-	if (n < 0)
+	len = _strlen(str);
+	num_written = write(STDOUT_FILENO, str, len);
+	if (num_written == -1)
 	{
-		len++;
-		num = n * -1;
+		perror("write");
 	}
-	else
-	{
-		num = n;
-	}
-	while (num > 9)
-	{
-		len++;
-		num = num / 10;
-	}
-
-	return (len);
 }
+
 /**
- * _itoa - a func that .. later
- * @num: a passing param.
- * Return: buff if not NULL.
+ * _puterror - Prints an error message to the standard error stream
+ * @err: The error message to print
+ *
+ * Return: Void
  */
-char *_itoa(int num)
+void _puterror(char *err)
 {
-	char *buff;
-	size_t  n;
-	int len = intlen(num);
+	size_t len;
+	ssize_t num_written;
 
-	buff = malloc(len + 1);
-	if (!buff)
+	len = _strlen(err);
+	num_written = write(STDERR_FILENO, err, len);
+	if (num_written == -1)
 	{
-		return (NULL);
+		perror("write");
 	}
-	buff[len] = '\0';
-	if (num < 0)
-	{
-		n = num * -1;
-		*buff = '-';
-	}
-	else
-		n = num;
-	len--;
-
-	do {
-		*(buff + len) = (n % 10) + '0';
-		n /= 10;
-		len--;
-	} while (n > 0);
-		return (buff);
-}
-/**
- * geterror - a function that run command
- * @n: argument
- * @arv: arv argument
- * @cmd: the command.
- * Return: void.
- */
-void geterror(denum *n, char **arv, char *cmd)
-{
-	int len;
-	char *errmsg, *cnt_str;
-
-	cnt_str = _itoa(n->cnt);
-	len = _strlen(arv[0]) + _strlen(cmd) + _strlen(cnt_str) + 17;
-	errmsg = malloc(len);
-	if (!errmsg)
-	{
-		return;
-	}
-	_strcpy(errmsg, arv[0]);
-	_strcat(errmsg, ": ");
-	_strcat(errmsg, cnt_str);
-	_strcat(errmsg, ": ");
-	_strcat(errmsg, cmd);
-	_strcat(errmsg, ": not found\n");
-	_strcat(errmsg, "\0");
-	write(STDOUT_FILENO, errmsg, len);
-	free(errmsg);
 }
