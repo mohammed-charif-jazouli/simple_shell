@@ -1,56 +1,70 @@
 #include "shell.h"
 
 /**
- * get_full_path - Get the full path to an executable command.
- * @cmd: The name of the command.
+ * getoken - Tokenize a string into an array of tokens.
+ * @returned_line: The input string to tokenize.
  *
- * Return: The full path to the command or NULL if not found.
+ * Return: An array of token strings.
  */
-char *get_full_path(char *cmd)
+
+char **getoken(char *returned_line)
 {
-    char *path_env, *path_plus_cmd, *dir;
-    int i;
-    struct stat st;
+	char *token = NULL, *tokencp = NULL;
+	char **cmd = NULL;
+	int cont = 0, i = 0;
 
-    for (i = 0; cmd[i]; i++)
-    {
-        if (cmd[i] == '/')
-        {
-            if (stat(cmd, &st) == 0)
-                return _strdup(cmd);
-            return NULL;
-        }
-    }
+	if (!returned_line)
+		return (NULL);
+	tokencp = _strdup(returned_line);
+	token = strtok(tokencp, SPECIF);
+	if (token == NULL)
+	{
+		free(returned_line), returned_line = NULL;
+		free(tokencp), tokencp = NULL;
+		return (NULL);
+	}
+	while (token)
+	{
+		cont++;
+		token = strtok(NULL, SPECIF);
+	}
+	free(tokencp), tokencp = NULL;
 
-    path_env = get_environment_variable("PATH");
+	cmd = malloc(sizeof(char *) * (cont + 1));
+	if (!cmd)
+	{
+		free(returned_line), returned_line = NULL;
+		return (NULL);
+	}
+	token = strtok(returned_line, SPECIF);
+	while (token)
+	{
+		cmd[i] = _strdup(token);
+		token = strtok(NULL, SPECIF);
+		i++;
+	}
+	free(returned_line), returned_line = NULL;
+	cmd[i] = NULL;
+	return (cmd);
+}
 
-    if (path_env == NULL)
-        return NULL;
+/**
+ * freearray - Free memory allocated for an array of strings.
+ * @ary: The array of strings to free.
+ */
 
-    dir = strtok(path_env, ":");
+void freearray(char **ary)
+{
+	int i;
 
-    while (dir)
-    {
-        path_plus_cmd = malloc(_strlen(dir) + _strlen(cmd) + 2);
+	if (!ary)
+		return;
 
-        if (path_plus_cmd)
-        {
-            _strcpy(path_plus_cmd, dir);
-            _strcat(path_plus_cmd, "/");
-            _strcat(path_plus_cmd, cmd);
+	for (i = 0; ary[i]; i++)
+		{
+		free(ary[i]);
+		ary[i] = NULL;
+	}
 
-            if (stat(path_plus_cmd, &st) == 0)
-            {
-                free(path_env);
-                return path_plus_cmd;
-            }
-
-            free(path_plus_cmd);
-            path_plus_cmd = NULL;
-            dir = strtok(NULL, ":");
-        }
-    }
-
-    free(path_env);
-    return NULL;
+	free(ary), ary = NULL;
 }

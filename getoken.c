@@ -1,71 +1,70 @@
 #include "shell.h"
 
 /**
- * tokenize - Tokenize a string into an array of tokens.
- * @input: The input string to tokenize.
+ * getoken - Tokenize a string into an array of tokens.
+ * @returned_line: The input string to tokenize.
  *
  * Return: An array of token strings.
  */
-char **tokenize(char *input)
+
+char **getoken(char *returned_line)
 {
-    char *token = NULL, *token_cp = NULL;
-    char **cmd = NULL;
-    int count = 0, i = 0;
+	char *token = NULL, *tokencp = NULL;
+	char **cmd = NULL;
+	int cont = 0, i = 0;
 
-    if (input == NULL)
-        return NULL;
+	if (!returned_line)
+		return (NULL);
+	tokencp = _strdup(returned_line);
+	token = strtok(tokencp, SPECIF);
+	if (token == NULL)
+	{
+		free(returned_line), returned_line = NULL;
+		free(tokencp), tokencp = NULL;
+		return (NULL);
+	}
+	while (token)
+	{
+		cont++;
+		token = strtok(NULL, SPECIF);
+	}
+	free(tokencp), tokencp = NULL;
 
-    token_cp = _strdup(input);
-    token = strtok(token_cp, SPECIF);
-
-    while (token)
-    {
-        count++;
-        token = strtok(NULL, SPECIF);
-    }
-
-    free(token_cp);
-
-    cmd = malloc(sizeof(char *) * (count + 1));
-
-    if (cmd == NULL)
-    {
-        free(input);
-        return NULL;
-    }
-
-    token = strtok(input, SPECIF);
-
-    while (token)
-    {
-        cmd[i] = _strdup(token);
-        token = strtok(NULL, SPECIF);
-        i++;
-    }
-
-    free(input);
-    cmd[i] = NULL;
-
-    return cmd;
+	cmd = malloc(sizeof(char *) * (cont + 1));
+	if (!cmd)
+	{
+		free(returned_line), returned_line = NULL;
+		return (NULL);
+	}
+	token = strtok(returned_line, SPECIF);
+	while (token)
+	{
+		cmd[i] = _strdup(token);
+		token = strtok(NULL, SPECIF);
+		i++;
+	}
+	free(returned_line), returned_line = NULL;
+	cmd[i] = NULL;
+	return (cmd);
 }
 
 /**
- * free_array - Free memory allocated for an array of strings.
+ * freearray - Free memory allocated for an array of strings.
  * @ary: The array of strings to free.
  */
-void free_array(char **ary)
+
+void freearray(char **ary)
 {
-    int i;
+	int i;
 
-    if (ary == NULL)
-        return;
+	if (!ary)
+		return;
 
-    for (i = 0; ary[i]; i++)
-    {
-        free(ary[i]);
-        ary[i] = NULL;
-    }
+	for (i = 0; ary[i]; i++)
+		{
+		free(ary[i]);
+		ary[i] = NULL;
+	}
 
-    free(ary);
-    ary = NULL;
+	free(ary), ary = NULL;
 }
