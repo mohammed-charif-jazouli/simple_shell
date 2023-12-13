@@ -1,20 +1,20 @@
 #include "shell.h"
 
 /**
- * main - Simple shell main function.
+ * main - simple shell main function.
  *
- * @argc: Count of args.
- * @argv: List of arguments.
+ * @argc: count of args.
+ * @argv: list of arguments.
  *
- * Return: Always 0 for success.
- */
+ * Return: always 0 succes.
+*/
 int main(int argc, char **argv)
 {
-    int status = 0;
+	int status = 0;
 
-    (void)argc;
+	(void) argc;
 
-    status = shell_loop(argv);
+	status = shell_looper(argv);
 
-    return status;
+	return (status);
 }
