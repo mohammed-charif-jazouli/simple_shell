@@ -1,40 +1,20 @@
 #include "shell.h"
 
 /**
- * main - implements a simple shell
+ * main - simple shell main function.
  *
- * Return: EXIT_SUCCESS.
- */
-int main(void)
+ * @argc: count of args.
+ * @argv: list of arguments.
+ *
+ * Return: always 0 succes.
+*/
+int main(int argc, char **argv)
 {
-	char *input;
-	char **args;
-	int status;
+	int status = 0;
 
-	/* Register signal handlers */
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	signal(SIGTSTP, handle_sigstp);
+	(void) argc;
 
-	do {
-		input = get_input();
-		if (!input || !*input)/* EOF detected, exit the loop */
-			break;
+	status = shell_looper(argv);
 
-		args = tokenize_input(input);
-		if (!args || !*args)
-		{
-			free(input);
-			free_tokens(args);
-			continue;
-		}
-		status = execute(args);
-		free(input);
-		free_tokens(args);
-
-		/* Set status to 1 to continue the loop */
-		status = 1;
-	} while (status);
-
-	return (EXIT_SUCCESS);
+	return (status);
 }

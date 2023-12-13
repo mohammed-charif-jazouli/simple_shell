@@ -1,249 +1,65 @@
-# alx-low_level_programming
-
-# Shell Project
-This project is a simple UNIX command-line interpreter, also known as a shell. It is capable of reading commands from standard input, parsing them, and executing them.
-
-## 0x16. C - Simple Shell
-
-### Pre-requisites
-
-#### Authorized functions and macros:
-- access (man 2 access)
-- chdir (man 2 chdir)
-- close (man 2 close)
-- closedir (man 3 closedir)
-- execve (man 2 execve)
-- exit (man 3 exit)
-- _exit (man 2 _exit)
-- fflush (man 3 fflush)
-- fork (man 2 fork)
-- free (man 3 free)
-- getcwd (man 3 getcwd)
-- getline (man 3 getline)
-- isatty (man 3 isatty)
-- kill (man 2 kill)
-- malloc (man 3 malloc)
-- open (man 2 open)
-- opendir (man 3 opendir)
-- perror (man 3 perror)
-- read (man 2 read)
-- readdir (man 3 readdir)
-- signal (man 2 signal)
-- stat (__xstat) (man 2 stat)
-- lstat (__lxstat) (man 2 lstat)
-- fstat (__fxstat) (man 2 fstat)
-- strtok (man 3 strtok)
-- wait (man 2 wait)
-- waitpid (man 2 waitpid)
-- wait3 (man 2 wait3)
-- wait4 (man 2 wait4)
-- write (man 2 write)
-
-
-## Project Structure
-
-The project is organized as follows:
-
-```
-.
-├── AUTHORS
-├── README.md
-├── LICENSE
-├── CODE_OF_CONDUCT.md
-├── simple_shell.1 (man page)
-├── shell.h
-├── main.c
-├── get_input.c
-├── get_line.c*
-├── prompt.c
-├── tokenizer.c
-├── execute.c
-├── free.c
-├── signal_handler.c
-├── built-ins Funcs:
-│ ├── get_env.c
-│ ├── bultins_shell_cd.c
-│ ├── bultins_shell_exit.c
-│ ├── bultins_shell_help.c
-│ ├── bultins_set_env.c
-│ └──── bultins_unset_env
-├── Path Funcs:
-│ ├── get_path.c
-│ ├── find_in_path.c
-│ ├── set_path.c
-│ ├── append_to_path.c
-│ └── prepend_to_path.c
-├── error.c
-└── utils:
-  ├── utils_func1.c
-  ├── utils_func2.c
-  └── utils_func2.c
- 
-```
-
-
-`AUTHORS` file lists the contributors to the project. 
-
-`README.md` file you are currently reading is a brief overview of the project. 
-
-`man_1_simple_shell` file is the man page for the shell.
-
-`shell.h`: a header file that includes all the necessary libraries, function prototypes, and global variables.
-
-`main.c`: the main file that contains the loop for getting the user input, parsing the input, and executing the command.
-
-`prompt.c`: a file that handles the prompt display for the shell.
-
-`execute.c`: a file that contains the functions for executing the non-built-in commands.
-
-`parser.c` : This file contains the implementation of functions for parsing user input into arguments.
-
-`free.c`: This file contains the implementation of functions for deallocating memory.
-
-`signal_handler.c`: This file contains the implementation of signal handler functions for handling SIGINT, SIGTSTP and SIGQUIT signals.
-
-`builtins funcs`: These are the source code files that contains functions related to the implementations of the built-in commands (cd, exit, env, setenv, unsetenv and help).
-
-`path funcs`: These are the source code files that contains functions related to working with the system's PATH environment variable, such as finding a command in the PATH, getting the current PATH, and setting or modifying the PATH.
-
-`utils.c`: a file that contains utility functions for the shell, such as string manipulation functions and functions for printing error messages.
-
-`error.c`: This file contains the implementation of functions for handling errors.
-
-`Makefile`: a file that specifies the compilation rules for the shell.
-
-`test_files`: These are test files for each of the implementation files in source_files. 
-
-This tree separates the implementation files from the test files, making it easier to navigate the project and run the tests.
-
-## Function Prototypes.
-
-The header file declares several function prototypes for the shell program, including:
-
-`prompt()`: prints the shell prompt
-
-`execute()`: executes a command with arguments
-
-`get_line()`: Read input from the standard input. Custom getline().
-
-`get_input()`: Retrieves user input from stdin. Uses getline().
-
-`tokenize()`: parsing user input into arguments.
-
-`handle_sigint()`: signal handler for SIGINT
-
-`handle_sigstp()`: signal handler for SIGSTP
-
-`handle_sigquit()`: signal handler for SIGQUIT
-
-`check_for_builtin()`: checks if a command is a shell builtin
-
-`shell_env()`: prints environment variables
-
-`shell_setenv()`: sets an environment variable
-
-`shell_unsetenv()`: unsets an environment variable
-
-`shell_help()`: prints help information for the shell
-
-`shell_cd()`: changes the current working directory
-
-`shell_exit()`: exits the shell program with a status code
-
-`_getenv()`: retrieves the value of an environment variable
-
-`find_in_path()`: searches for a command in the directories specified by the PATH environment variable
-
-`get_path()`: retrieves the PATH environment variable
-
-`set_path()`: sets the PATH environment variable
-
-`append_to_path()`: appends a directory to the PATH environment variable
-
-`prepend_to_path()`: prepends a directory to the PATH environment variable
-
-`free_error()`: frees memory allocated following system error
-
-`free_tokens()`: frees memory allocated for tokens
-
-`_puterror()`: prints an error message
-
-`_puts()`: prints a string
-
-`_atoi()`: converts a string to an integer
-
-`_putchar()`: prints a character
-
-`_strlen()`: gets the length of a string
-
-`_strcmp()`: compares two strings
-
-`_strcpy()`: copies a string
-
-`_strcat()`: concatenates two strings
-
-`_strdup()`: duplicates a string
-
-`_strchr()`: searches a string for a character
-
-`_strstr()`: searches for the first occurrence of a substring
-
-`_strspn()`: gets the length of a prefix substring
-
-## Usage
-
-To use the simple shell, compile the files using `gcc -Wall -Werror -Wextra -pedantic *.c -o hsh`. Then, run the shell using `./hsh`.
-
-`
+#SIMPLE SHELL
+We created a basic version of the Unix shell from scratch. A program that takes commands from the keyboard and gives them to the operating system to perform. The shell can perform commands such as listing files in current working directory by typing ls, exit, among others. It works in both interactive and non-interactive mode.
+
+#The following are the allowed functions and system calls;
+
+access, chdir, close, closedir, execve, exit, _exit, fflush, fork,free, getcwd, getline, getpid, isatty, kill, malloc, open, opendir, perror, read, readdir, signal, stat, lstat, fstat, strtok, wait, waitpid, wait3, wait4, write.
+
+#This simple shell is a Shell interface written in C programming language that gives to the user a prompt #cisfun$, after it accepts,it executes a user inputted commandin a separate process called child process.
+
+#File Descriptions
+AUTHORS: Has the names of this project's contributors.
+executor.c: Contains the function that executes shell commands.
+str_hundler1.c, str_hundler.c: Contains functions that are used to manipultate and get data about strings like finding string length and splitting a string.
+built_in.c: Includes functions to perform built-in shell command operations like exit.
+main.h: Holds all function prototypes and headers.
+main.c: The shell's entry point i.e contains the main method.
+man_1_simple_shell: A manual for the shell.
+readline.c: Responsible for picking commands typed into the shell.
+handle_path.c: Contains function get_path to get the path for command. For example when a user types ls instead of \bin\ls.
+getoken.c: contain function to tokenize the line entred.
+errors.c: contain function that print errors.
+
+#Builtin functions
+
+env: Print current environment variables
+setenv: Set new environment variable setenv var_name va_value
+unsetenv: Remove environment variable unsetenv var_name va_value
+
+#How to use the shell:
+#Install;
+(your_terminal)$ git clone <this repository>
+(your_terminal)$ cd simple_shell
+#Compile:
 gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
-`
+Usage: non-interactive mode
+echo "/bin/ls" | ./hsh
+Usage: interactive mode
+(your_terminal)$ ./hsh
+#Example
 
-This wil compile all the '.c' files and change the output's name to 'hsh'.
+/bin/ls -l
+total 80
+-rw-r--r-- 1 root root   138 Oct 12 08:40 AUTHORS
+-rw-r--r-- 1 root root  1705 Oct 13 09:41 built_in.c
+-rw-r--r-- 1 root root   912 Oct 13 08:38 environ.c
+-rw-r--r-- 1 root root   574 Oct 13 09:43 errors.c
+-rw-r--r-- 1 root root   740 Oct 13 08:43 executor.c
+-rw-r--r-- 1 root root   850 Oct 13 09:53 getoken.c
+-rw-r--r-- 1 root root   825 Oct 13 08:51 handle_path.c
+-rwxr-xr-x 1 root root 22568 Oct 13 10:09 hsh
+-rw-r--r-- 1 root root   637 Oct 13 09:02 main.c
+-rw-r--r-- 1 root root   282 Oct 13 09:32 memory.c
+-rw-r--r-- 1 root root   363 Oct 13 09:05 readline.c
+-rw-r--r-- 1 root root    29 Oct 11 19:05 README.md
+-rw-r--r-- 1 root root  1114 Oct 13 10:09 shell.h
+-rw-r--r-- 1 root root  1339 Oct 13 09:29 str_hundler1.c
+-rw-r--r-- 1 root root  1957 Oct 13 09:22 str_hundler.c
 
-### Template to test output:
-=============
-```
-$ ./hsh
+#Bugs
+At this time, there are no known bugs.
 
-($) ls
+#Authors:
 
-hsh main.c shell.c shell.h
-
-$ exit
-$
-```
-
-also in non-interactive mode:
-```
-$ echo "/bin/ls" | ./hsh
-hsh main.c shell.c test_ls_2
-$
-$ cat test_ls_2
-/bin/ls
-/bin/ls
-$
-$ cat test_ls_2 | ./hsh
-hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
-$
-```
-
-## Man Page.
-
-To generate a man page for the `simple_shell`, you can use the `ronn` utility. `ronn` allows you to write man pages in Markdown format and then convert them to man page format.
-
-Once you have created the `simple_shell.1.md` file, run the following command to generate the man page:
-
-`ronn simple_shell.1.md`
-
-This will create a new file called `simple_shell.1`. You can view the man page by running the following command:
-
-`man ./simple_shell.1`
-
-## AUTHORS
-
-This program was written by `FourtyThree43` and `Kemboiray`.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+Ismail-Taha <https://github.com/Ismail-Taha>
+Joe-0009 <https://github.com/Joe-0009>
